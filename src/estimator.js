@@ -19,8 +19,8 @@ const covid19ImpactEstimator = (data) => {
   class Data {
     constructor(est, num) {
       this.timeToElapse = time(est);
-      this.incomePop = est.region.avgDailyIncomePopulation / 100;
-      this.incomeMultiple = Math.trunc(est.region.avgDailyIncomeInUSD * this.timeToElapse);
+      this.incomePop = est.region.avgDailyIncomePopulation;
+      this.incomeMultiple = est.region.avgDailyIncomeInUSD;
       this.factors = Math.trunc((2 ** Math.trunc((this.timeToElapse / 3))));
       this.currentlyInfected = Math.trunc((est.reportedCases * num));
       this.infectionsByRequestedTime = Math.trunc((this.currentlyInfected * this.factors));
@@ -30,7 +30,7 @@ const covid19ImpactEstimator = (data) => {
       this.casesForICUByRequestedTime = Math.trunc((this.infectionsByRequestedTime) * 0.05);
       this.casesForVentilatorsByRequestedTime = Math.trunc((this.infectionsByRequestedTime) * 0.02);
       // eslint-disable-next-line max-len
-      this.dollarsInFlight = Math.trunc(this.infectionsByRequestedTime * this.incomePop * this.incomeMultiple);
+      this.dollarsInFlight = Math.trunc((this.infectionsByRequestedTime * this.incomePop * this.incomeMultiple) / this.timeToElapse);
     }
   }
   return {
