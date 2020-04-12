@@ -1,10 +1,27 @@
 /* eslint-disable linebreak-style */
+const time = (info) => {
+  let elapsedTime;
+  const { periodType } = info;
+  const { timeToElapse } = info;
+
+  if (periodType === 'days') {
+    elapsedTime = timeToElapse;
+  } else if (info.periodType === 'weeks') {
+    elapsedTime = timeToElapse * 7;
+  } else {
+    elapsedTime = timeToElapse * 30;
+  }
+
+  return elapsedTime;
+};
+
 const covid19ImpactEstimator = (data) => {
   class Data {
     constructor(est, num) {
+      this.timeToElapse = time(est);
       this.incomePop = est.region.avgDailyIncomePopulation;
-      this.incomeMultiple = est.region.avgDailyIncomeInUSD * est.timeToElapse;
-      this.factors = Math.trunc((2 ** Math.trunc((est.timeToElapse / 3))));
+      this.incomeMultiple = est.region.avgDailyIncomeInUSD * this.timeToElapse;
+      this.factors = Math.trunc((2 ** Math.trunc((this.timeToElapse / 3))));
       this.currentlyInfected = Math.trunc((est.reportedCases * num));
       this.infectionsByRequestedTime = Math.trunc((this.currentlyInfected * this.factors));
       this.severeCasesByRequestedTime = Math.trunc((this.infectionsByRequestedTime * 0.15));
