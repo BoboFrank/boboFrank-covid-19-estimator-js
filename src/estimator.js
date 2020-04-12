@@ -26,7 +26,7 @@ const covid19ImpactEstimator = (data) => {
       this.infectionsByRequestedTime = Math.trunc((this.currentlyInfected * this.factors));
       this.severeCasesByRequestedTime = Math.trunc((this.infectionsByRequestedTime * 0.15));
       this.hospitalBedsRequested = (est.totalHospitalBeds * 0.35) - this.severeCasesByRequestedTime;
-      this.hospitalBedByRequestedTime = Math.trunc(this.hospitalBedsRequested);
+      this.hospitalBedsByRequestedTime = Math.trunc(this.hospitalBedsRequested);
       this.casesForICUByRequestedTime = Math.trunc(((this.infectionsByRequestedTime) * 0.05));
       this.casesForVentilatorsByRequestedTime = Math.trunc((this.infectionsByRequestedTime) * 0.02);
       // eslint-disable-next-line max-len
