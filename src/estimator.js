@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+// covid estimator app
 const time = (info) => {
   let elapsedTime;
   const { periodType } = info;
